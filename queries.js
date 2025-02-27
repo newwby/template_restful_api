@@ -1,3 +1,5 @@
+const { json } = require('express')
+
 const Pool = require('pg').Pool
 const pool = new Pool({
   user: 'me',
@@ -9,10 +11,21 @@ const pool = new Pool({
 
 const getUsers = (request, response) => {
   pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
-    if (error) {
-      throw error
+    let output = {
+      "success": null,
+      "status": null,
     }
-    response.status(200).json(results.rows)
+    if (error) {
+      output.success = false
+      output.status = 500
+      output.error = error
+    }
+    else {
+      output.success = true
+      output.status = 200
+      output.data = results.rows
+    }
+    response.status(output.status).json(output)
   })
 }
 
