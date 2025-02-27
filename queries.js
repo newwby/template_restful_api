@@ -29,6 +29,38 @@ const getUsers = (request, response) => {
   })
 }
 
+const getUserById = (request, response) => {
+  const id = parseInt(request.params.id)
+
+  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+    let output = {
+      "success": null,
+      "status": null,
+    }
+    if (error) {
+      output.success = false
+      output.status = 500
+      output.error = error
+    }
+    else {
+      let is_user_found = (results.rows.length !== 0)
+      if (is_user_found) {
+        output.success = true
+        output.status = 200
+        output.id_requested = id
+        output.data = results.rows
+      }
+      else {
+        output.success = false
+        output.status = 404
+        output.id_requested = id
+      }
+    }
+    response.status(output.status).json(output)
+  })
+}
+
 module.exports = {
     getUsers,
+    getUserById,
 }
