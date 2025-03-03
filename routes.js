@@ -28,8 +28,22 @@ const getUserById = async (request, response) => {
   }
 }
 
+const createUser = async (request, response) => {
+  const { name, email } = request.body
+  // TODO add validation
+  try {
+    const user = await queries.addUser(name, email)
+    response.status(200).json({"success": true, "data": user})
+    
+  }
+  catch (error) {
+    response.status(500).json({"success": false, "error": error.message, "details": error})
+  }
+}
+
 
 module.exports = {
     getUsers,
     getUserById,
+    createUser,
 }

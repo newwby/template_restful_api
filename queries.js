@@ -50,7 +50,29 @@ async function getUser(arg_id) {
 }
 
 
+async function addUser(arg_name, arg_email) {
+  return new Promise((resolve, reject) => {
+    pool.query(`INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *`, [arg_name, arg_email], (error, results) => {
+      // error handling
+      if (error) {
+        console.error(`addUser error: ${error}`)
+        error.message = `Failed to add user with info ${arg_name}, ${arg_email}: ${error.message}`
+        return reject(error)
+      }
+      else if (results.rows.length === 0) {
+        return reject (new Error(`addUser - new user with info ${arg_name}, ${arg_email} not returned.`))
+      }
+      else {
+        resolve(results.rows)
+      }
+
+    })
+  })
+}
+
+
 module.exports = {
   getAllUsers,
   getUser,
+  addUser,
 }
