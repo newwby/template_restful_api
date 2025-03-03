@@ -14,8 +14,8 @@ const getUsers = async (request, response) => {
 
 const getUserById = async (request, response) => {
   const request_id = parseInt(request.params.id)
-  if (typeof(request_id) !== "number") {
-    response.status(400).json({"success": false, "error": `getUserById error, invalid ID: ${request_id}`})
+  if (isNaN(request_id)) {
+    response.status(400).json({"success": false, "error": `getUserById error, ${request.params.id} is invalid ID: ${request_id}`})
   }
   else {
     try {
