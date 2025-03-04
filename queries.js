@@ -71,8 +71,34 @@ async function addUser(arg_name, arg_email) {
 }
 
 
+
+// need to adjust queries/userService function names, add consistency for whether constants/functions
+async function changeUser(arg_id, arg_name, arg_email) {
+  return new Promise((resolve, reject) => {
+    pool.query('UPDATE users SET name = $1, email = $2 WHERE id = $3',
+    [arg_name, arg_email, arg_id],
+    (error, results) => {
+      // error handling
+      if (error) {
+        console.error(`changeUser error: ${error}`)
+        error.message = `Failed to modify user id ${arg_id} with info ${arg_name}, ${arg_email}. Error: ${error}`
+        return reject(error)
+      }
+      else if (results.rows.length === 0) {
+        return reject (new Error(`changeUser - cannot modify user id ${arg_id}.`))
+      }
+      else {
+        response.status(200).send(`User modified with ID: ${arg_id}`)
+      }
+
+    })
+  })
+}
+
+
 module.exports = {
   getAllUsers,
   getUser,
   addUser,
+  changeUser,
 }
