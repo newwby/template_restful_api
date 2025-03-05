@@ -28,6 +28,7 @@ const getUserById = async (request, response) => {
   }
 }
 
+
 const createUser = async (request, response) => {
   const { name, email } = request.body
   // TODO add validation
@@ -40,6 +41,7 @@ const createUser = async (request, response) => {
     response.status(500).json({"success": false, "error": error.message, "details": error})
   }
 }
+
 
 const updateUser = async (request, response) => {
   const {name, email} = request.body
@@ -59,6 +61,7 @@ const updateUser = async (request, response) => {
 
   }
 }
+
 
 const removeUser = async (request, response) => {
   const request_id = parseInt(request.params.id)
