@@ -71,7 +71,7 @@ const removeUser = async (request, response) => {
   else {
     try {
       const user = await queries.deleteUser(request_id)
-      response.status(200).json({"success": true, "data": `User deleted with ID ${request_id}.`})
+      response.status(204).send()
     }
     catch (error) {
       response.status(500).json({"success": false, "error": error.message, "details": error})
