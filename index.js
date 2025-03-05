@@ -1,5 +1,5 @@
 const express = require('express')
-const db = require('./routes')
+const db = require('./userController')
 const app = express()
 const port = 3000
 
