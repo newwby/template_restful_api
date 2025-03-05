@@ -60,10 +60,27 @@ const updateUser = async (request, response) => {
   }
 }
 
+const removeUser = async (request, response) => {
+  const request_id = parseInt(request.params.id)
+  if (isNaN(request_id)) {
+    response.status(400).json({"success": false, "error": `removeUser error, ${request.params.id} is invalid ID: ${request_id}`})
+  }
+  else {
+    try {
+      const user = await queries.deleteUser(request_id)
+      response.status(200).json({"success": true, "data": `User deleted with ID ${request_id}.`})
+    }
+    catch (error) {
+      response.status(500).json({"success": false, "error": error.message, "details": error})
+    }
+  }
+}
+
 
 module.exports = {
     getUsers,
     getUserById,
     createUser,
     updateUser,
+    removeUser,
 }

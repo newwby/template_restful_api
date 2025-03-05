@@ -93,9 +93,26 @@ async function changeUser(arg_id, arg_name, arg_email) {
 }
 
 
+async function deleteUser(arg_id) {
+  return new Promise((resolve, reject) => {
+    pool.query('DELETE FROM users WHERE id = $1', [arg_id], (error, results) => {
+      if (error) {
+        console.error(`getUser error: ${error}`)
+        error.message = `Failed to get user ${arg_id}: ${error.message}`
+        return reject(error)
+      }
+      else {
+        resolve()
+      }
+    })
+  })
+}
+
+
 module.exports = {
   getAllUsers,
   getUser,
   addUser,
   changeUser,
+  deleteUser,
 }
