@@ -33,7 +33,7 @@ const getAllUsers = async () => {
 
 async function getUser(arg_id) {
   return new Promise((resolve, reject) => {
-    pool.query(`SELECT * FROM users WHERE id = ${arg_id}`, (error, results) => {
+    pool.query('SELECT * FROM users WHERE id = $1', [arg_id], (error, results) => {
       if (error) {
         console.error(`getUser error: ${error}`)
         error.message = `Failed to get user ${arg_id}: ${error.message}`
