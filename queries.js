@@ -43,7 +43,7 @@ async function getUser(arg_id) {
         return reject (new Error(`getUser - user ${arg_id} not found.`))
       }
       else {
-        resolve(results.rows)
+        resolve(results.rows[0])
       }
     })
   })
