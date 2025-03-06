@@ -4,10 +4,10 @@ const userService = require('../services/userService')
 const getAllUsers = async (request, response) => {
   try {
     const users = await userService.fetchAllUsers()
-    response.status(200).json({"success": true, "data": users })
+    response.status(200).json({"data": users })
   }
   catch (error) {
-    response.status(500).json({"success": false, "error": error.message, "details": error})
+    response.status(500).json({"error": error.message, "details": error})
   }
 }
 
@@ -15,10 +15,10 @@ const getAllUsers = async (request, response) => {
 const getUserById = async (request, response) => {
     try {
       const user = await userService.fetchUser(request.request_id)
-      response.status(200).json({"success": true, "data": user})
+      response.status(200).json({"data": user})
     }
     catch (error) {
-      response.status(500).json({"success": false, "error": error.message, "details": error})
+      response.status(500).json({"error": error.message, "details": error})
     }
 }
 
@@ -26,11 +26,11 @@ const getUserById = async (request, response) => {
 const createUser = async (request, response) => {
   try {
     const user = await userService.insertUser(request.name, request.email)
-    response.status(200).json({"success": true, "data": user})
+    response.status(200).json({"data": user})
     
   }
   catch (error) {
-    response.status(500).json({"success": false, "error": error.message, "details": error})
+    response.status(500).json({"error": error.message, "details": error})
   }
 }
 
@@ -38,10 +38,10 @@ const createUser = async (request, response) => {
 const updateUser = async (request, response) => {
     try {
       const user = await userService.updateUser(request.request_id, request.name, request.email)
-      response.status(200).json({"success": true, "data": user})
+      response.status(200).json({"data": user})
     }
     catch (error) {
-      response.status(500).json({"success": false, "error": error.message})
+      response.status(500).json({"error": error.message})
     }
 }
 
