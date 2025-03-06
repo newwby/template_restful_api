@@ -51,19 +51,14 @@ const updateUser = async (request, response) => {
 
 
 const removeUser = async (request, response) => {
-  const request_id = parseInt(request.params.id)
-  if (isNaN(request_id)) {
-    response.status(400).json({"success": false, "error": `removeUser error, ${request.params.id} is invalid ID: ${request_id}`})
-  }
-  else {
     try {
-      const user = await queries.deleteUser(request_id)
+      // add middleware validation for if user exists and returns different status if not (404)
+      const user = await queries.deleteUser(request.request_id)
       response.status(204).send()
     }
     catch (error) {
       response.status(500).json({"success": false, "error": error.message, "details": error})
     }
-  }
 }
 
 
