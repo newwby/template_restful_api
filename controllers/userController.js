@@ -39,21 +39,14 @@ const createUser = async (request, response) => {
 
 const updateUser = async (request, response) => {
   const {name, email} = request.body
-  const request_id = parseInt(request.params.id)
-  if (isNaN(request_id)) {
-    response.status(400).json({"success": false, "error": `getUserById error, ${request.params.id} is invalid ID: ${request_id}`})
-  }
-  else {
     // TODO add validation
     try {
-      const user = await queries.changeUser(request_id, name, email)
+      const user = await queries.changeUser(request.request_id, name, email)
       response.status(200).json({"success": true, "data": user})
     }
     catch (error) {
       response.status(500).json({"success": false, "error": error.message})
     }
-
-  }
 }
 
 
