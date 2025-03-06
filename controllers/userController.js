@@ -1,9 +1,9 @@
 const { json } = require('express')
-const queries = require('../services/userService')
+const userService = require('../services/userService')
 
-const getUsers = async (request, response) => {
+const getAllUsers = async (request, response) => {
   try {
-    const users = await queries.getAllUsers()
+    const users = await userService.fetchAllUsers()
     response.status(200).json({"success": true, "data": users })
   }
   catch (error) {
@@ -14,7 +14,7 @@ const getUsers = async (request, response) => {
 
 const getUserById = async (request, response) => {
     try {
-      const user = await queries.getUser(request.request_id)
+      const user = await userService.fetchUser(request.request_id)
       response.status(200).json({"success": true, "data": user})
     }
     catch (error) {
@@ -27,7 +27,7 @@ const createUser = async (request, response) => {
   const { name, email } = request.body
   // TODO add validation
   try {
-    const user = await queries.addUser(name, email)
+    const user = await userService.insertUser(name, email)
     response.status(200).json({"success": true, "data": user})
     
   }
@@ -41,7 +41,7 @@ const updateUser = async (request, response) => {
   const {name, email} = request.body
     // TODO add validation
     try {
-      const user = await queries.changeUser(request.request_id, name, email)
+      const user = await userService.updateUser(request.request_id, name, email)
       response.status(200).json({"success": true, "data": user})
     }
     catch (error) {
@@ -53,7 +53,7 @@ const updateUser = async (request, response) => {
 const removeUser = async (request, response) => {
     try {
       // add middleware validation for if user exists and returns different status if not (404)
-      const user = await queries.deleteUser(request.request_id)
+      const user = await userService.deleteUser(request.request_id)
       response.status(204).send()
     }
     catch (error) {
@@ -63,7 +63,7 @@ const removeUser = async (request, response) => {
 
 
 module.exports = {
-    getUsers,
+    getAllUsers,
     getUserById,
     createUser,
     updateUser,

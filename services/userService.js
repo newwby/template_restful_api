@@ -9,7 +9,7 @@ const pool = new Pool({
 })
 
 
-const getAllUsers = async () => {
+const fetchAllUsers = async () => {
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
       if (error) {
@@ -31,7 +31,7 @@ const getAllUsers = async () => {
 }
 
 
-async function getUser(arg_id) {
+async function fetchUser(arg_id) {
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM users WHERE id = $1', [arg_id], (error, results) => {
       if (error) {
@@ -50,7 +50,7 @@ async function getUser(arg_id) {
 }
 
 
-async function addUser(arg_name, arg_email) {
+async function insertUser(arg_name, arg_email) {
   return new Promise((resolve, reject) => {
     pool.query(`INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *`, [arg_name, arg_email], (error, results) => {
       // error handling
@@ -73,7 +73,7 @@ async function addUser(arg_name, arg_email) {
 
 
 // need to adjust queries/userService function names, add consistency for whether constants/functions
-async function changeUser(arg_id, arg_name, arg_email) {
+async function updateUser(arg_id, arg_name, arg_email) {
   return new Promise((resolve, reject) => {
     pool.query('UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *',
     [arg_name, arg_email, arg_id],
@@ -110,9 +110,9 @@ async function deleteUser(arg_id) {
 
 
 module.exports = {
-  getAllUsers,
-  getUser,
-  addUser,
-  changeUser,
+  fetchAllUsers,
+  fetchUser,
+  insertUser,
+  updateUser,
   deleteUser,
 }

@@ -1,6 +1,6 @@
 const express = require('express')
-const mw = require('./middleware/userMiddleware')
-const db = require('./controllers/userController')
+const userMiddleware = require('./middleware/userMiddleware')
+const userController = require('./controllers/userController')
 const app = express()
 const port = 3000
 
@@ -17,11 +17,11 @@ app.get('/', (request, response) => {
 
 
 
-app.get('/users', db.getUsers)
-app.get('/users/:id', mw.validateUserID, db.getUserById)
-app.post('/users', db.createUser)
-app.put('/users/:id', mw.validateUserID, db.updateUser)
-app.delete('/users/:id', mw.validateUserID, db.removeUser)
+app.get('/users', userController.getAllUsers)
+app.get('/users/:id', userMiddleware.validateUserID, userController.getUserById)
+app.post('/users', userController.createUser)
+app.put('/users/:id', userMiddleware.validateUserID, userController.updateUser)
+app.delete('/users/:id', userMiddleware.validateUserID, userController.removeUser)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
