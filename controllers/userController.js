@@ -1,5 +1,5 @@
 const { json } = require('express')
-const queries = require('../userService')
+const queries = require('../services/userService')
 
 const getUsers = async (request, response) => {
   try {
@@ -13,19 +13,13 @@ const getUsers = async (request, response) => {
 
 
 const getUserById = async (request, response) => {
-  const request_id = parseInt(request.params.id)
-  if (isNaN(request_id)) {
-    response.status(400).json({"success": false, "error": `getUserById error, ${request.params.id} is invalid ID: ${request_id}`})
-  }
-  else {
     try {
-      const user = await queries.getUser(request_id)
+      const user = await queries.getUser(request.request_id)
       response.status(200).json({"success": true, "data": user})
     }
     catch (error) {
       response.status(500).json({"success": false, "error": error.message, "details": error})
     }
-  }
 }
 
 
