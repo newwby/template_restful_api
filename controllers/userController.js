@@ -24,10 +24,8 @@ const getUserById = async (request, response) => {
 
 
 const createUser = async (request, response) => {
-  const { name, email } = request.body
-  // TODO add validation
   try {
-    const user = await userService.insertUser(name, email)
+    const user = await userService.insertUser(request.name, request.email)
     response.status(200).json({"success": true, "data": user})
     
   }
@@ -38,10 +36,8 @@ const createUser = async (request, response) => {
 
 
 const updateUser = async (request, response) => {
-  const {name, email} = request.body
-    // TODO add validation
     try {
-      const user = await userService.updateUser(request.request_id, name, email)
+      const user = await userService.updateUser(request.request_id, request.name, request.email)
       response.status(200).json({"success": true, "data": user})
     }
     catch (error) {

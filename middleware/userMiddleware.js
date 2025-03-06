@@ -10,6 +10,15 @@ const validateUserID = async (request, response, next) => {
   }
 }
 
+const validateUserSchema = async (request, response, next) => {
+  const { name, email } = request.body
+  // TODO add validation
+  request.name = name
+  request.email = email
+  next()
+}
+
 module.exports = {
     validateUserID,
+    validateUserSchema,
 }

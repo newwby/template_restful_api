@@ -19,8 +19,8 @@ app.get('/', (request, response) => {
 
 app.get('/users', userController.getAllUsers)
 app.get('/users/:id', userMiddleware.validateUserID, userController.getUserById)
-app.post('/users', userController.createUser)
-app.put('/users/:id', userMiddleware.validateUserID, userController.updateUser)
+app.post('/users', userMiddleware.validateUserSchema, userController.createUser)
+app.put('/users/:id', userMiddleware.validateUserID, userMiddleware.validateUserSchema, userController.updateUser)
 app.delete('/users/:id', userMiddleware.validateUserID, userController.removeUser)
 
 app.listen(port, () => {
