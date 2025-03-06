@@ -25,7 +25,8 @@ const getUserById = async (request, response) => {
 
 const createUser = async (request, response) => {
   try {
-    const user = await userService.insertUser(request.name, request.email)
+    const { name, email } = request.body
+    const user = await userService.insertUser(name, email)
     response.status(200).json({"data": user})
     
   }
@@ -37,7 +38,8 @@ const createUser = async (request, response) => {
 
 const updateUser = async (request, response) => {
     try {
-      const user = await userService.updateUser(request.request_id, request.name, request.email)
+      const { name, email } = request.body
+      const user = await userService.updateUser(request.request_id, name, email)
       response.status(200).json({"data": user})
     }
     catch (error) {
