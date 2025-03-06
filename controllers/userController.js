@@ -14,7 +14,7 @@ const getAllUsers = async (request, response) => {
 
 const getUserById = async (request, response) => {
     try {
-      const user = await userService.fetchUser(request.request_id)
+      const user = await userService.fetchUser(request.id)
       response.status(200).json({"data": user})
     }
     catch (error) {
@@ -39,7 +39,7 @@ const createUser = async (request, response) => {
 const updateUser = async (request, response) => {
     try {
       const { name, email } = request.body
-      const user = await userService.updateUser(request.request_id, name, email)
+      const user = await userService.updateUser(request.id, name, email)
       response.status(200).json({"data": user})
     }
     catch (error) {
@@ -51,7 +51,7 @@ const updateUser = async (request, response) => {
 const removeUser = async (request, response) => {
     try {
       // add middleware validation for if user exists and returns different status if not (404)
-      const user = await userService.deleteUser(request.request_id)
+      const user = await userService.deleteUser(request.id)
       response.status(204).send()
     }
     catch (error) {
