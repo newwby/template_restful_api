@@ -38,7 +38,7 @@ async function fetchUser(arg_id) {
         return reject(error)
       }
       else if (results.rows.length === 0) {
-        resolve(results.rows[0])
+        resolve(null)
         // return reject (new Error(`User not found.`))
       }
       else {
