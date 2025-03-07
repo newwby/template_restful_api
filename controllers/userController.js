@@ -55,7 +55,7 @@ const removeUser = async (request, response) => {
       response.status(204).send()
     }
     catch (error) {
-      response.status(500).json({"success": false, "error": error.message, "details": error})
+      response.status(500).json({"error": error.message, "details": error})
     }
 }
 
