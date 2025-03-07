@@ -18,10 +18,10 @@ app.get('/', (request, response) => {
 
 
 app.get('/users', userController.getAllUsers)
-app.get('/users/:id', userMiddleware.validateUserID, userController.getUserById)
+app.get('/users/:id', userMiddleware.validateUserID, userMiddleware.validateUserExists, userController.getUserById)
 app.post('/users', userMiddleware.validateUserSchema, userController.createUser)
-app.put('/users/:id', userMiddleware.validateUserID, userMiddleware.validateUserSchema, userController.updateUser)
-app.delete('/users/:id', userMiddleware.validateUserID, userController.removeUser)
+app.put('/users/:id', userMiddleware.validateUserID, userMiddleware.validateUserExists, userMiddleware.validateUserSchema, userController.updateUser)
+app.delete('/users/:id', userMiddleware.validateUserID, userMiddleware.validateUserExists, userController.removeUser)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
