@@ -25,11 +25,10 @@ const validateUserID = async (request, response, next) => {
 }
 
 const validateUserSchema = async (request, response, next) => {
-//   add error if request.body doesn't include schema requirements
     const { name, email } = request.body
-  // TODO add validation
-//   request.name = name
-//   request.email = email
+    if (!name || !email) {
+        return response.status(400).json({ "error": "Missing required fields: name and email", "status": 400 })
+    }
   next()
 }
 
