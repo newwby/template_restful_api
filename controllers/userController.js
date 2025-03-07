@@ -7,7 +7,7 @@ const getAllUsers = async (request, response) => {
     response.status(200).json({"data": users })
   }
   catch (error) {
-    response.status(500).json({"error": error.message, "details": error})
+    response.status(500).json({"error": error.message, "status": 500})
   }
 }
 
@@ -18,7 +18,7 @@ const getUserById = async (request, response) => {
       response.status(200).json({"data": user})
     }
     catch (error) {
-      response.status(500).json({"error": error.message, "details": error})
+      response.status(500).json({"error": error.message, "status": 500})
     }
 }
 
@@ -31,7 +31,7 @@ const createUser = async (request, response) => {
     
   }
   catch (error) {
-    response.status(500).json({"error": error.message, "details": error})
+    response.status(500).json({"error": error.message, "status": 500})
   }
 }
 
@@ -43,7 +43,7 @@ const updateUser = async (request, response) => {
       response.status(200).json({"data": user})
     }
     catch (error) {
-      response.status(500).json({"error": error.message})
+      response.status(500).json({"error": error.message, "status": 500})
     }
 }
 
@@ -55,7 +55,7 @@ const removeUser = async (request, response) => {
       response.status(204).send()
     }
     catch (error) {
-      response.status(500).json({"error": error.message, "details": error})
+      response.status(500).json({"error": error.message, "status": 500})
     }
 }
 

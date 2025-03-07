@@ -13,8 +13,7 @@ const fetchAllUsers = async () => {
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
       if (error) {
-        console.error(`getAllUsers error: ${error}`)
-        error.message = `Failed to get all users: ${error.message}`
+        error.message = `Failed to get all users.`
         return reject(error)
       }
       else if (!results.rows) {
@@ -35,12 +34,11 @@ async function fetchUser(arg_id) {
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM users WHERE id = $1', [arg_id], (error, results) => {
       if (error) {
-        console.error(`getUser error: ${error}`)
-        error.message = `Failed to get user ${arg_id}: ${error.message}`
+        error.message = `Failed to fetch user ${arg_id}.`
         return reject(error)
       }
       else if (results.rows.length === 0) {
-        return reject (new Error(`getUser - user ${arg_id} not found.`))
+        return reject (new Error(`User ${arg_id} not found.`))
       }
       else {
         resolve(results.rows[0])
@@ -54,13 +52,13 @@ async function insertUser(arg_name, arg_email) {
   return new Promise((resolve, reject) => {
     pool.query(`INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *`, [arg_name, arg_email], (error, results) => {
       // error handling
+      let schema = {"name": arg_name, "email": arg_email}
       if (error) {
-        console.error(`addUser error: ${error}`)
-        error.message = `Failed to add user with info ${arg_name}, ${arg_email}: ${error.message}`
+        error.message = `Failed to add user: ${schema}.`
         return reject(error)
       }
       else if (results.rows.length === 0) {
-        return reject (new Error(`addUser - new user with info ${arg_name}, ${arg_email} not returned.`))
+        return reject (new Error(`Did not return new user: ${schema}`))
       }
       else {
         resolve(results.rows)
@@ -71,23 +69,18 @@ async function insertUser(arg_name, arg_email) {
 }
 
 
-
-// need to adjust queries/userService function names, add consistency for whether constants/functions
 async function updateUser(arg_id, arg_name, arg_email) {
   return new Promise((resolve, reject) => {
     pool.query('UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *',
     [arg_name, arg_email, arg_id],
     (error, results) => {
-      // error handling
       if (error) {
-        console.error(`changeUser error: ${error}`)
-        error.message = `Failed to modify user id ${arg_id} with info ${arg_name}, ${arg_email}. Error: ${error}`
+        error.message = `Failed to modify user ${arg_id}.`
         return reject(error)
       }
       else {
         resolve(results.rows)
       }
-
     })
   })
 }
@@ -97,8 +90,7 @@ async function deleteUser(arg_id) {
   return new Promise((resolve, reject) => {
     pool.query('DELETE FROM users WHERE id = $1', [arg_id], (error, results) => {
       if (error) {
-        console.error(`getUser error: ${error}`)
-        error.message = `Failed to get user ${arg_id}: ${error.message}`
+        error.message = `Could not delete user ${arg_id}.`
         return reject(error)
       }
       else {
