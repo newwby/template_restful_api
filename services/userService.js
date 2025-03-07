@@ -62,7 +62,7 @@ async function insertUser(arg_name, arg_email) {
         return reject (new Error(`Did not return new user: ${schema}`))
       }
       else {
-        resolve(results.rows)
+        resolve(results.rows[0])
       }
 
     })
