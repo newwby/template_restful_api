@@ -27,7 +27,7 @@ const createUser = async (request, response) => {
   try {
     const { name, email } = request.body
     const user = await userService.insertUser(name, email)
-    response.status(200).json({"data": user})
+    response.status(201).json({"data": user})
     
   }
   catch (error) {
