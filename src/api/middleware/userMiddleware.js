@@ -1,4 +1,4 @@
-const userService = require('../api/services/userService')
+const userService = require('../services/userService')
 
 const validateUserExists = async (request, response, next) => {
     try {
