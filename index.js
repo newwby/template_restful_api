@@ -26,3 +26,5 @@ app.delete('/users/:id', userMiddleware.validateUserID, userMiddleware.validateU
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
+
+module.exports = app;
