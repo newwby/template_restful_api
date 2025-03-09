@@ -1,5 +1,5 @@
 const { json } = require('express')
-const userService = require('../services/userService')
+const userService = require('../api/services/userService')
 
 const getAllUsers = async (request, response) => {
   try {

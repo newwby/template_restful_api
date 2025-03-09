@@ -1,6 +1,6 @@
 const express = require('express')
-const userMiddleware = require('./middleware/userMiddleware')
-const userController = require('./controllers/userController')
+const userMiddleware = require('./src/api/middleware/userMiddleware')
+const userController = require('./src/api/controllers/userController')
 const app = express()
 const port = 3000
 
