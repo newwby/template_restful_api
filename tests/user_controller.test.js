@@ -95,4 +95,31 @@ describe('createUser Tests', () => {
         });
     });
 
+
+// unit tests broken into test suites for each function
+describe('UpdateUser Tests', () => {
+    
+    // each test uses the same components
+    let req, res;
+    beforeEach(() => {
+        req = httpMocks.createRequest();
+        res = httpMocks.createResponse();
+        res.status = jest.fn().mockReturnValue(res);
+        res.json = jest.fn();
+        req.id = 2;
+        req.body = {"id": 3, "name": 'Brand New User'};
+    });
+
+    // UpdateUser success test
+    test('should return new user values if update successful', async () => {
+        const mockUpdatedUser = {"name": req.body.name, "email": req.body.email}
+        userService.insertUser.mockResolvedValue({"data": mockUpdatedUser})
+        await userController.updateUser(req, res);
+        expect(res.status).toHaveBeenCalledWith(200)
+        expect(res.json).toHaveBeenCalledWith({"data": mockUpdatedUser})
+    })
+
+
+})
+
 })
