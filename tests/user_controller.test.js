@@ -59,3 +59,28 @@ describe('getUserById Tests', () => {
         });
     });
 });
+
+
+// unit tests broken into test suites for each function
+describe('createUser Tests', () => {
+    
+    // each test uses the same components
+    let req, res;
+    beforeEach(() => {
+        req = httpMocks.createRequest();
+        res = httpMocks.createResponse();
+        res.status = jest.fn().mockReturnValue(res);
+        res.json = jest.fn();
+        req.body = {"id": 2, "name": 'Jane Doe'};
+    });
+
+    // success test
+    test('should return confirmation of new user when created', async () => {
+        const mockCreatedUser = { id: 2, name: 'Jane Doe' };
+        userService.insertUser.mockResolvedValue(mockCreatedUser)
+        await userController.createUser(req, res);
+        expect(res.status).toHaveBeenCalledWith(201)
+        expect(res.json).toHaveBeenCalledWith({"data": mockCreatedUser})
+    })
+
+})
