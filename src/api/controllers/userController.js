@@ -39,7 +39,7 @@ const createUser = async (request, response) => {
 const updateUser = async (request, response) => {
     try {
       const { name, email } = request.body
-      const user = await userService.updateUser(request.id, name, email)
+      const user = await userService.insertUser(request.id, name, email)
       response.status(200).json({"data": user})
     }
     catch (error) {
