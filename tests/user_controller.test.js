@@ -71,12 +71,12 @@ describe('createUser Tests', () => {
         res = httpMocks.createResponse();
         res.status = jest.fn().mockReturnValue(res);
         res.json = jest.fn();
-        req.body = {"id": 2, "name": 'Jane Doe'};
+        req.body = {"email": "jane@doemail.com", "name": 'Jane Doe'};
     });
 
     // success test
     test('should return confirmation of new user when created', async () => {
-        const mockCreatedUser = { id: 2, name: 'Jane Doe' };
+        const mockCreatedUser = {email: 'jane@doemail.com', name: 'Jane Doe' };
         userService.insertUser.mockResolvedValue(mockCreatedUser)
         await userController.createUser(req, res);
         expect(res.status).toHaveBeenCalledWith(201)
@@ -107,13 +107,14 @@ describe('UpdateUser Tests', () => {
         res.status = jest.fn().mockReturnValue(res);
         res.json = jest.fn();
         req.id = 2;
-        req.body = {"id": 3, "name": 'Brand New User'};
+        req.body.email = "user@ymail.com";
+        req.body.name = "Brand New User";
     });
 
     // UpdateUser success test
     test('should return new user values if update successful', async () => {
-        const mockUpdatedUser = {"name": req.body.name, "email": req.body.email}
-        userService.insertUser.mockResolvedValue({"data": mockUpdatedUser})
+        const mockUpdatedUser = {"id": req.id, "name": req.body.name, "email": req.body.email}
+        userService.insertUser.mockResolvedValue(mockUpdatedUser)
         await userController.updateUser(req, res);
         expect(res.status).toHaveBeenCalledWith(200)
         expect(res.json).toHaveBeenCalledWith({"data": mockUpdatedUser})
