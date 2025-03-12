@@ -81,6 +81,18 @@ describe('createUser Tests', () => {
         await userController.createUser(req, res);
         expect(res.status).toHaveBeenCalledWith(201)
         expect(res.json).toHaveBeenCalledWith({"data": mockCreatedUser})
-    })
+    });
+
+    // failure test
+    test('should return error message if new user not created', async () => {
+        const mockError = new Error(`Failed to add user: ${{"name": req.body.name, "email": req.body.email}}`)
+        userService.insertUser.mockRejectedValue(mockError)
+        await userController.createUser(req, res)
+        expect(res.status).toHaveBeenCalledWith(500)
+        expect(res.json).toHaveBeenCalledWith({
+            error: mockError.message,
+            status: 500
+        });
+    });
 
 })
