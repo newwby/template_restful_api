@@ -120,6 +120,18 @@ describe('UpdateUser Tests', () => {
         expect(res.json).toHaveBeenCalledWith({"data": mockUpdatedUser})
     })
 
+    // UpdateUser failure test
+    test('should return error message if update fails', async () => {
+        const mockError = new Error(`Did not return user!`)
+        userService.insertUser.mockRejectedValue(mockError)
+        await userController.createUser(req, res)
+        expect(res.status).toHaveBeenCalledWith(500)
+        expect(res.json).toHaveBeenCalledWith({
+            error: mockError.message,
+            status: 500
+        });
+    });
+
 
 })
 
