@@ -132,5 +132,25 @@ describe('UpdateUser Tests', () => {
         });
     });
 
+})
+
+describe('removeUser Tests', () => {
+    
+// each test uses the same components
+let req, res;
+beforeEach(() => {
+    req = httpMocks.createRequest();
+    res = httpMocks.createResponse();
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn();
+    req.id = 3;
+});
+
+// removeUser success test
+test('should return no content status', async () => {
+    userService.deleteUser.mockResolvedValue()
+    await userController.removeUser(req, res);
+    expect(res.status).toHaveBeenCalledWith(204)
+})
 
 })
