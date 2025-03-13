@@ -153,4 +153,16 @@ test('should return no content status', async () => {
     expect(res.status).toHaveBeenCalledWith(204)
 })
 
+// removeUser failure test
+test('should return error message if update fails', async () => {
+    const mockError = new Error(`Could not delete user!`)
+    userService.deleteUser.mockRejectedValue(mockError)
+    await userController.removeUser(req, res)
+    expect(res.status).toHaveBeenCalledWith(500)
+    expect(res.json).toHaveBeenCalledWith({
+        error: mockError.message,
+        status: 500
+    });
+});
+
 })
