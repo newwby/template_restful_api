@@ -94,7 +94,7 @@ describe('createUser Tests', () => {
             status: 500
         });
     });
-
+})
 
 // unit tests broken into test suites for each function
 describe('UpdateUser Tests', () => {
@@ -132,7 +132,5 @@ describe('UpdateUser Tests', () => {
         });
     });
 
-
-})
 
 })
