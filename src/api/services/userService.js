@@ -16,7 +16,7 @@ const fetchAllUsers = async () => {
         error.message = `Failed to get all users.`
         return reject(error)
       }
-      else if (!results.rows) {
+      else if (results == null) {
         return reject (new Error('getAllUsers output error.'))
       }
       else if (results.rows.length === 0) {
