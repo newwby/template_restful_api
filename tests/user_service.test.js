@@ -38,6 +38,15 @@ describe('fetch all users', () => {
 
   })
 
-  // add failure test
+  test('test for invalid query', async () => {
+    
+    testPool.query.mockImplementation((query, callback) => {
+      callback(new Error('Failed to get all users.'), null);
+    });
+
+    await expect(userService.fetchAllUsers()).rejects.toThrow('Failed to get all users.');
+    expect(testPool.query).toHaveBeenCalledWith('SELECT * FROM users ORDER BY id ASC', expect.any(Function));
+
+  })
 
 })
