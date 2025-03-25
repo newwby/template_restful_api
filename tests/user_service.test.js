@@ -29,7 +29,9 @@ describe('fetch all users', () => {
 
     // query is SQL, callback is the func called once query complete
     // result is no error (null) & the (faked) result from query
-    testPool.query.mockImplementation((query, callback) => callback(null, {rows: mockSuccessResult}))
+    testPool.query.mockImplementation((query, callback) => {
+      callback(null, {rows: mockSuccessResult})
+    });
 
     const users = await userService.fetchAllUsers();
 
@@ -47,6 +49,15 @@ describe('fetch all users', () => {
     await expect(userService.fetchAllUsers()).rejects.toThrow('Failed to get all users.');
     expect(testPool.query).toHaveBeenCalledWith('SELECT * FROM users ORDER BY id ASC', expect.any(Function));
 
+  })
+
+  test('test for no result', async () => {
+    testPool.query.mockImplementation((query, callback) => {
+      callback(null, {rows: []});
+    });
+    
+    await expect(userService.fetchAllUsers()).rejects.toThrow('getAllUsers - no users found.');
+    expect(testPool.query).toHaveBeenCalledWith('SELECT * FROM users ORDER BY id ASC', expect.any(Function));
   })
 
 })
